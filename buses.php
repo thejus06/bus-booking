@@ -13,16 +13,31 @@ $sql = "SELECT * FROM buses
 $result = $conn->query($sql);
 ?>
 
-<h2>Available Buses</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Available Buses</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-<?php while($row = $result->fetch_assoc()) { ?>
-    <div>
-        <h3><?php echo $row['name']; ?></h3>
-        Time: <?php echo $row['time']; ?><br>
-        Price: ₹<?php echo $row['price']; ?><br>
+<div class="container">
+    <h1>Available Buses</h1>
 
-        <a href="book.php?bus_id=<?php echo $row['id']; ?>">
-            Book Now
-        </a>
+    <div class="bus-list">
+        <?php while($row = $result->fetch_assoc()) { ?>
+            <div class="bus-card">
+                <h2><?php echo $row['name']; ?></h2>
+                <p>🕒 <?php echo $row['time']; ?></p>
+                <p>💰 ₹<?php echo $row['price']; ?></p>
+
+                <a href="book.php?bus_id=<?php echo $row['id']; ?>">
+                    <button>Book Now</button>
+                </a>
+            </div>
+        <?php } ?>
     </div>
-<?php } ?>
+</div>
+
+</body>
+</html>
