@@ -1,6 +1,8 @@
 <?php
 session_start();
+
 if(!isset($_SESSION['user'])){
+    $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI']; // SAVE CURRENT PAGE
     header("Location: login.php");
     exit();
 }
@@ -31,11 +33,11 @@ while($row = $result->fetch_assoc()){
 <div class="container">
     <h1>Select Your Seat</h1>
 
-    <form action="confirm.php" method="POST">
+    <form action="payment.php" method="POST">
         <input type="hidden" name="bus_id" value="<?php echo $bus_id; ?>">
         <input type="hidden" name="seat" id="seatInput">
 
-        <!-- 💺 SEAT GRID -->
+        <!-- ✅ IMPORTANT: SEAT GRID -->
         <div class="seat-grid" id="seats"></div>
 
         <p id="selectedText">Selected Seats: None</p>
@@ -51,12 +53,16 @@ let selectedSeats = [];
 
 let seatsDiv = document.getElementById("seats");
 
+// ✅ DEBUG CHECK
+if(!seatsDiv){
+    alert("Seat container not found!");
+}
+
 for (let i = 1; i <= 20; i++) {
     let seat = document.createElement("div");
     seat.classList.add("seat");
     seat.innerText = i;
 
-    // 🔴 already booked
     if (bookedSeats.includes(i)) {
         seat.classList.add("booked");
     } else {

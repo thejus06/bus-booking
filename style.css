@@ -115,6 +115,7 @@ button:hover {
     grid-template-columns: repeat(4, 60px);
     gap: 15px;
     justify-content: center;
+    margin-top: 20px;
 }
 
 .seat {
