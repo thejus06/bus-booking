@@ -1,4 +1,10 @@
 <?php
+session_start();
+if(!isset($_SESSION['user'])){
+    header("Location: login.php");
+    exit();
+}
+
 include 'db.php';
 $bus_id = $_GET['bus_id'];
 
@@ -29,13 +35,12 @@ while($row = $result->fetch_assoc()){
         <input type="hidden" name="bus_id" value="<?php echo $bus_id; ?>">
         <input type="hidden" name="seat" id="seatInput">
 
+        <!-- 💺 SEAT GRID -->
         <div class="seat-grid" id="seats"></div>
 
         <p id="selectedText">Selected Seats: None</p>
 
         <br>
-        <input type="text" name="name" placeholder="Your Name" required><br><br>
-
         <button type="submit">Confirm Booking</button>
     </form>
 </div>
@@ -51,6 +56,7 @@ for (let i = 1; i <= 20; i++) {
     seat.classList.add("seat");
     seat.innerText = i;
 
+    // 🔴 already booked
     if (bookedSeats.includes(i)) {
         seat.classList.add("booked");
     } else {
@@ -66,7 +72,7 @@ for (let i = 1; i <= 20; i++) {
             document.getElementById("seatInput").value = selectedSeats.join(",");
 
             document.getElementById("selectedText").innerText =
-                selectedSeats.length > 0 
+                selectedSeats.length > 0
                 ? "Selected Seats: " + selectedSeats.join(", ")
                 : "Selected Seats: None";
         };

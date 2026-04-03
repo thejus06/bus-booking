@@ -218,3 +218,16 @@ button:hover {
     color: black;
     box-shadow: 0 0 15px #00ffff;
 }
+.ticket {
+    margin-top: 15px;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.05);
+    box-shadow: 0 0 20px rgba(0,255,255,0.3);
+    transition: 0.3s;
+}
+
+.ticket:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 30px #00ffff;
+}

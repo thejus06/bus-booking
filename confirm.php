@@ -1,14 +1,16 @@
 <?php include 'db.php'; ?>
+<?php session_start(); ?>
 
 <?php
 $bus_id = $_POST['bus_id'];
 $seats = $_POST['seat']; // "1,2,5"
-$name = $_POST['name'];
+$name = $_SESSION['user'];
+$user_id = $_SESSION['user_id'];
 
 $seatArray = explode(",", $seats);
 $error = false;
 
-// check duplicates
+// check duplicate seats
 foreach ($seatArray as $s) {
     $check = $conn->query("SELECT * FROM bookings WHERE bus_id='$bus_id' AND FIND_IN_SET('$s', seat_number)");
     if ($check->num_rows > 0) {
@@ -20,8 +22,8 @@ foreach ($seatArray as $s) {
 $success = false;
 
 if (!$error) {
-    $sql = "INSERT INTO bookings (bus_id, seat_number, user_name)
-            VALUES ('$bus_id', '$seats', '$name')";
+    $sql = "INSERT INTO bookings (bus_id, seat_number, user_name, user_id)
+            VALUES ('$bus_id', '$seats', '$name', '$user_id')";
 
     if ($conn->query($sql)) {
         $success = true;
@@ -50,13 +52,17 @@ if (!$error) {
             <p><strong>Bus ID:</strong> <?php echo $bus_id; ?></p>
         </div>
 
+        <a href="history.php">
+            <button>View My Bookings</button>
+        </a>
+
         <a href="index.php">
             <button>Book Again</button>
         </a>
     </div>
 
 <?php } else { ?>
-    <h1 style="color:red;">❌ Seat already booked!</h1>
+    <h1 style="color:red;">❌ One or more seats already booked!</h1>
 <?php } ?>
 
 </div>
