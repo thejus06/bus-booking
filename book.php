@@ -28,6 +28,12 @@ while($row = $result->fetch_assoc()){
     <title>Select Seat</title>
     <link rel="stylesheet" href="style.css">
 </head>
+<script src="script.js"></script>
+
+<script>
+let bookedSeats = <?php echo json_encode($booked); ?>;
+initSeats(bookedSeats);
+</script>
 <body>
 
 <div class="container">
@@ -37,7 +43,7 @@ while($row = $result->fetch_assoc()){
         <input type="hidden" name="bus_id" value="<?php echo $bus_id; ?>">
         <input type="hidden" name="seat" id="seatInput">
 
-        <!-- ✅ IMPORTANT: SEAT GRID -->
+        <!--SEAT GRID -->
         <div class="seat-grid" id="seats"></div>
 
         <p id="selectedText">Selected Seats: None</p>
@@ -46,47 +52,5 @@ while($row = $result->fetch_assoc()){
         <button type="submit">Confirm Booking</button>
     </form>
 </div>
-
-<script>
-let bookedSeats = <?php echo json_encode($booked); ?>;
-let selectedSeats = [];
-
-let seatsDiv = document.getElementById("seats");
-
-// ✅ DEBUG CHECK
-if(!seatsDiv){
-    alert("Seat container not found!");
-}
-
-for (let i = 1; i <= 20; i++) {
-    let seat = document.createElement("div");
-    seat.classList.add("seat");
-    seat.innerText = i;
-
-    if (bookedSeats.includes(i)) {
-        seat.classList.add("booked");
-    } else {
-        seat.onclick = function() {
-            if (selectedSeats.includes(i)) {
-                selectedSeats = selectedSeats.filter(s => s !== i);
-                seat.classList.remove("selected");
-            } else {
-                selectedSeats.push(i);
-                seat.classList.add("selected");
-            }
-
-            document.getElementById("seatInput").value = selectedSeats.join(",");
-
-            document.getElementById("selectedText").innerText =
-                selectedSeats.length > 0
-                ? "Selected Seats: " + selectedSeats.join(", ")
-                : "Selected Seats: None";
-        };
-    }
-
-    seatsDiv.appendChild(seat);
-}
-</script>
-
 </body>
 </html>
