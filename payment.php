@@ -11,7 +11,6 @@ $seats = $_POST['seat'];
     <title>Payment</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<script src="script.js"></script>
 <body>
 <div class="container" id="paymentBox">
     <h1>💳 Payment</h1>
@@ -25,5 +24,6 @@ $seats = $_POST['seat'];
         <button type="submit" onclick="processPayment()">Pay Now</button>
     </form>
 </div>
+<script src="script.js"></script>
 </body>
 </html>

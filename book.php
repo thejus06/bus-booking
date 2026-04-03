@@ -28,14 +28,7 @@ while($row = $result->fetch_assoc()){
     <title>Select Seat</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<script src="script.js"></script>
-
-<script>
-let bookedSeats = <?php echo json_encode($booked); ?>;
-initSeats(bookedSeats);
-</script>
 <body>
-
 <div class="container">
     <h1>Select Your Seat</h1>
 
@@ -52,5 +45,11 @@ initSeats(bookedSeats);
         <button type="submit">Confirm Booking</button>
     </form>
 </div>
+<script src="script.js"></script>
+
+<script>
+let bookedSeats = <?php echo json_encode($booked); ?>;
+initSeats(bookedSeats);
+</script>
 </body>
 </html>
