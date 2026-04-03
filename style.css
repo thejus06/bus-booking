@@ -154,3 +154,45 @@ button:hover {
         box-shadow: 0 0 25px #00ffff;
     }
 }
+
+/* Seat Layout */
+.seat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 60px);
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Normal seat */
+.seat {
+    width: 60px;
+    height: 60px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Hover */
+.seat:hover {
+    background: #00ffff;
+    color: black;
+}
+
+/* 🔴 Booked seat */
+.seat.booked {
+    background: #ff4d4d;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* 🔵 Selected seat */
+.seat.selected {
+    background: #00ffff;
+    color: black;
+    box-shadow: 0 0 15px #00ffff;
+}

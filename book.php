@@ -1,4 +1,14 @@
-<?php $bus_id = $_GET['bus_id']; ?>
+<?php
+include 'db.php';
+$bus_id = $_GET['bus_id'];
+
+// fetch booked seats
+$booked = [];
+$result = $conn->query("SELECT seat_number FROM bookings WHERE bus_id=$bus_id");
+while($row = $result->fetch_assoc()){
+    $booked[] = (int)$row['seat_number'];
+}
+?>
 
 <!DOCTYPE html>
 <html>
@@ -25,6 +35,8 @@
 </div>
 
 <script>
+let bookedSeats = <?php echo json_encode($booked); ?>;
+
 let seatsDiv = document.getElementById("seats");
 
 for (let i = 1; i <= 20; i++) {
@@ -32,11 +44,17 @@ for (let i = 1; i <= 20; i++) {
     seat.classList.add("seat");
     seat.innerText = i;
 
-    seat.onclick = function() {
-        document.querySelectorAll(".seat").forEach(s => s.classList.remove("selected"));
-        seat.classList.add("selected");
-        document.getElementById("seatInput").value = i;
-    };
+    // 🔴 If booked
+    if (bookedSeats.includes(i)) {
+        seat.classList.add("booked");
+    } else {
+        // 🟢 If available
+        seat.onclick = function() {
+            document.querySelectorAll(".seat").forEach(s => s.classList.remove("selected"));
+            seat.classList.add("selected");
+            document.getElementById("seatInput").value = i;
+        };
+    }
 
     seatsDiv.appendChild(seat);
 }
