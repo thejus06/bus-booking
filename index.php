@@ -4,6 +4,18 @@
     <title>Bus Booking</title>
     <link rel="stylesheet" href="style.css">
 </head>
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+<script>
+particlesJS("particles-js", {
+  particles: {
+    number: { value: 60 },
+    size: { value: 3 },
+    move: { speed: 2 },
+    line_linked: { enable: true },
+  }
+});
+</script>
+<div id="particles-js"></div>
 <body>
 
 <div class="container">

@@ -1,27 +1,49 @@
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
+    overflow: hidden;
+
+    background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #00c6ff);
+    background-size: 400% 400%;
+    animation: gradientMove 10s ease infinite;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .container {
     text-align: center;
-    padding: 40px;
-    border-radius: 20px;
-    background: rgba(0,0,0,0.4);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 40px rgba(0,255,255,0.2);
-}
+    padding: 50px;
+    width: 350px;
+    border-radius: 25px;
 
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(15px);
+
+    box-shadow: 0 0 50px rgba(0,255,255,0.2);
+
+    animation: float 4s ease-in-out infinite;
+}
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
 h1 {
     font-size: 3rem;
     color: #00ffff;
-    text-shadow: 0 0 20px #00ffff;
+    text-shadow: 
+        0 0 10px #00ffff,
+        0 0 20px #00ffff,
+        0 0 40px #00ffff;
 }
 
 .subtitle {
@@ -47,14 +69,14 @@ input {
 }
 
 input:focus {
-    box-shadow: 0 0 10px #00ffff;
+    box-shadow: 0 0 15px #00ffff;
 }
 
 button {
-    padding: 12px;
-    border-radius: 10px;
+    padding: 14px;
+    border-radius: 12px;
     border: none;
-    background: #00ffff;
+    background: linear-gradient(45deg, #00ffff, #00c6ff);
     color: black;
     font-weight: bold;
     cursor: pointer;
@@ -62,8 +84,8 @@ button {
 }
 
 button:hover {
-    background: white;
-    box-shadow: 0 0 15px #00ffff;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #00ffff;
 }
 
 .bus-list {
