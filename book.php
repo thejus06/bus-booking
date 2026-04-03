@@ -5,8 +5,12 @@ $bus_id = $_GET['bus_id'];
 // fetch booked seats
 $booked = [];
 $result = $conn->query("SELECT seat_number FROM bookings WHERE bus_id=$bus_id");
+
 while($row = $result->fetch_assoc()){
-    $booked[] = (int)$row['seat_number'];
+    $seats = explode(",", $row['seat_number']);
+    foreach($seats as $s){
+        $booked[] = (int)$s;
+    }
 }
 ?>
 
@@ -27,6 +31,8 @@ while($row = $result->fetch_assoc()){
 
         <div class="seat-grid" id="seats"></div>
 
+        <p id="selectedText">Selected Seats: None</p>
+
         <br>
         <input type="text" name="name" placeholder="Your Name" required><br><br>
 
@@ -36,6 +42,7 @@ while($row = $result->fetch_assoc()){
 
 <script>
 let bookedSeats = <?php echo json_encode($booked); ?>;
+let selectedSeats = [];
 
 let seatsDiv = document.getElementById("seats");
 
@@ -44,15 +51,24 @@ for (let i = 1; i <= 20; i++) {
     seat.classList.add("seat");
     seat.innerText = i;
 
-    // 🔴 If booked
     if (bookedSeats.includes(i)) {
         seat.classList.add("booked");
     } else {
-        // 🟢 If available
         seat.onclick = function() {
-            document.querySelectorAll(".seat").forEach(s => s.classList.remove("selected"));
-            seat.classList.add("selected");
-            document.getElementById("seatInput").value = i;
+            if (selectedSeats.includes(i)) {
+                selectedSeats = selectedSeats.filter(s => s !== i);
+                seat.classList.remove("selected");
+            } else {
+                selectedSeats.push(i);
+                seat.classList.add("selected");
+            }
+
+            document.getElementById("seatInput").value = selectedSeats.join(",");
+
+            document.getElementById("selectedText").innerText =
+                selectedSeats.length > 0 
+                ? "Selected Seats: " + selectedSeats.join(", ")
+                : "Selected Seats: None";
         };
     }
 
